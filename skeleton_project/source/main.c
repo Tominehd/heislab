@@ -45,8 +45,26 @@ int main(){
             break;
         }
         
+        /**
+        if(elevio_callButton(1,BUTTON_CAB)){
+            while(floor != 1){
+                if (floor > 1){
+                    elevio_motorDirection(DIRN_DOWN);
+                }
+                else if (floor < 1){
+                    elevio_motorDirection(DIRN_UP);
+                }
+            }
+            if (floor == 1){
+                elevio_motorDirection(DIRN_STOP);
+                break;
+            }
+                
+        }
+        */
         nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
     }
+
 
     return 0;
 }

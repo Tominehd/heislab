@@ -1,3 +1,9 @@
+/**
+* @file
+* @brief A simple library for doing operations on memory
+* buffers consisting of integers
+*/
+
 #include <assert.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -8,6 +14,7 @@
 
 #include "elevio.h"
 #include "con_load.h"
+
 
 static int sockfd;
 static pthread_mutex_t sockmtx;
