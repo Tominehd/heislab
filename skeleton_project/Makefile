@@ -6,7 +6,7 @@ CFLAGS      = -Wall -g -std=gnu11 -fsanitize=address
 LDFLAGS     = -fsanitize=address
 EXCLUDE     = '*test*'
 
-
+CC = clang
 
 SOURCEDIR = source
 OBJECTDIR = build
