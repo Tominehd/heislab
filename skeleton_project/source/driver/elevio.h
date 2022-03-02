@@ -34,7 +34,7 @@ typedef enum {
 void elevio_init(void);
 
 /**
- * @brief Change the motor direction
+ * @brief Sets the motor direction
  * 
  * @param[in] dirn An Enum where -1 means down, 0 stop and 1 up
  */
@@ -60,30 +60,30 @@ void elevio_floorIndicator(int floor);
  */
 void elevio_doorOpenLamp(int value);
 /**
- * @brief Makes the stop button light up when it is pressed
+ * @brief Turn on the stop lamp
  * 
- * @param[in] value 
+ * @param[in] value 1 if turn on, 0 if turn off
  */
 void elevio_stopLamp(int value);
 
 /**
- * @brief Denne kan vi skrive senere
+ * @brief Checks if a button is being pushed
  * 
  * @param[in] floor 
  * @param[in] button 
- * @return int et eller anna 
+ * @return int, 0 if false and 1 if true
  */
 int elevio_callButton(int floor, ButtonType button);
 /**
  * @brief Holds track of which floor the elevtor is on
  * 
- * @return int the floor
+ * @return an int that indicates the floor
  */
 int elevio_floorSensor(void);
 /**
- * @brief 
+ * @brief checks if the stop button is being pressed
  * 
- * @return int 
+ * @return int, rturn 1 if true?
  */
 int elevio_stopButton(void);
 int elevio_obstruction(void);
