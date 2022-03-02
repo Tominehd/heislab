@@ -2,6 +2,7 @@
 
 int returnState();
     
+    /**
 void state_machine(){
 
     while(1){
@@ -19,3 +20,5 @@ void state_machine(){
     }
 
 }
+
+*/

@@ -7,19 +7,24 @@
 
 //Hei! Testing
 
+int lastFloor = 0;
 
 
 int getCurrentFloor(){
     return elevio_floorSensor();
 }
 
+
+/**
 void openElevatorDoor(){
     elevio_doorOpenLamp(1);
 };
 
 void closeElevatorDoor(){
-    elevio_closeDoorLamp(0);
+    elevio_openDoorLamp(0);
 };
+
+*/
 
 int isAtTargetFloor(int targetFloor){
     if((getCurrentFloor() == targetFloor) ){
@@ -31,16 +36,15 @@ int isAtTargetFloor(int targetFloor){
 }
 
 void hasReachedTargetFloor(){
-        openElevatorDoor();
+        //openElevatorDoor();
         elevio_motorDirection(DIRN_STOP);
         printf("Er her");
-    //nanosleep((const struct timespec[]){{0, 30*00000000L}}, NULL);
+        //nanosleep((const struct timespec[]){{0, 30*00000000L}}, NULL);
 }
 
 void driveElevator(int targetFloor, ButtonType b, int lastFloor){
 
     printf("Blir funksjonen kjørt");
-
 
     if(b == BUTTON_CAB){
         printf("Knappen er cab");
@@ -63,6 +67,8 @@ void driveElevator(int targetFloor, ButtonType b, int lastFloor){
             else if( get_lastFloor() < targetFloor){
                 elevio_motorDirection(DIRN_UP);
             }
+
+            nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
     
 
         }  
@@ -74,7 +80,7 @@ void driveElevator(int targetFloor, ButtonType b, int lastFloor){
                 hasReachedTargetFloor();
             }
 
-       
+     
 
     }
 
@@ -87,16 +93,22 @@ void valid_floor(){
        printf("Jeg blir kjørt");
     }
     elevio_motorDirection(DIRN_STOP);
+    lastFloor = getCurrentFloor();
+    printf("Etter valid floor %d \n", lastFloor);
+
 }
 
 
-int lastFloor;
+
 
 int get_lastFloor(){
-    if(getCurrentFloor() != -1){
-        int lastFloor = getCurrentFloor();
+    int currentFloor = getCurrentFloor();
+    if(currentFloor != -1){
+        lastFloor  = currentFloor;
+        printf("Etter last floor %d \n", lastFloor);
+        return lastFloor;
     }
-    
+    return lastFloor;
 }
 
 
@@ -115,8 +127,7 @@ int main(){
 
     while(1){
         int floor = elevio_floorSensor();
-        int lastFloor;
-
+        
 
         if(floor != -1){
             printf("floor: %d \n",floor); }
@@ -136,8 +147,8 @@ int main(){
                 elevio_buttonLamp(f, b, btnPressed);
                 if(btnPressed){
                     printf("Knapp er trykket på, ønsker å dra til: %d \n",f);
+                    //closeElevatorDoor();
                     driveElevator(f,b,lastFloor);
-                    closeElevatorDoor();
                 }
             }
         }
