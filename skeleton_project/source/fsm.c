@@ -16,6 +16,8 @@ void state_machine(){
             case WAITING:
             case IDLE:
             case STOP:
+            case OBSTRUCTION:
+                
         }
     }
 
