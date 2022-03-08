@@ -46,7 +46,6 @@ void elevio_init(void){
     freeaddrinfo(res);
     
     send(sockfd, (char[4]){0}, 4, 0);
-
 }
 
 
