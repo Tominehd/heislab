@@ -2,6 +2,7 @@
 
 int returnState();
     
+    /**
 void state_machine(){
 
     while(1){
@@ -15,7 +16,11 @@ void state_machine(){
             case WAITING:
             case IDLE:
             case STOP:
+            case OBSTRUCTION:
+                
         }
     }
 
 }
+
+*/
