@@ -1,10 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <time.h>
+#include "driver/elevio.h"
 
-void ordersStart();
+#pragma once
 
-void ordersUpdate();
 
-int nextOrder();
+int ordersMatrix[12][2] = {{9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9}};
 
-int findEntry();
 
-void deleteOrdersFromFloor(int floor);
+int addToOrders();
+
+int checkOrdersThisFloor();
