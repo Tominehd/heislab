@@ -1,7 +1,32 @@
 #include "orders.h"
 
 
+static int ordersMatrix[12][2] = {{9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9},
+                           {9,9}};
+
+int getFloor(){
+    int currentFloor = elevio_floorSensor();
+    int thisFloor = 0;
+    if(currentFloor != -1){
+        thisFloor  = currentFloor;
+        return thisFloor;
+    }
+    return thisFloor;
+}
+
+
 int addToOrders(){
+    printf ("addToOrders");
     for(int f = 0; f < N_FLOORS; f++){
         for(int b = 0; b < N_BUTTONS; b++){
             int btnPressed = elevio_callButton(f, b);
@@ -33,8 +58,21 @@ int addToOrders(){
 }
 
 
+//Returnerer 0 for oppover, 1 for nedover (for å matche ButtonType), 2 for i ro
+int getElevDirection(){
+    int thisFloor = getFloor();
+    if (ordersMatrix[0][0] > thisFloor){
+        return 0;
+    }
+    else if (ordersMatrix[0][0] < thisFloor){
+        return 1;
+    }
+    return 3;
+}
+
+
 int checkOrdersThisFloor(){
-    int thisFloor = get_lastFloor();
+    int thisFloor = getFloor();
     int ElevDirection = getElevDirection();
     int anyOrders = 0; //Forblir 0 om det ikke er noen ordre i denne etasjen, blir 1 om det er det
 

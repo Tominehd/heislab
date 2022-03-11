@@ -15,6 +15,8 @@
 // Klare å ta imot ordere mellom etasjer
 // Få en ordning som sorterer koden
 
+/**
+
 //Køen. ordersMatrix[i][0] = etasje, ordersMatrix[i][1] = type knapp trykket
 int ordersMatrix[12][2] = {{9,9},
                            {9,9},
@@ -235,7 +237,7 @@ void driveElevator(int targetFloor, ButtonType b){
 //}
 }
 
-
+*/
 
 int main(){
     elevio_init();
@@ -248,7 +250,7 @@ int main(){
     //elevio_motorDirection(DIRN_UP);   
 
     
-    valid_floor();
+    validFloor();
 
     while(1){
 
@@ -266,8 +268,9 @@ int main(){
             elevio_motorDirection(DIRN_STOP);
         }
 
-       
+        printf("Før add to orders");
         addToOrders();
+        printf("Etter add to orders");
         if(ordersMatrix[0][0] != 9){
             closeElevatorDoor();
             driveElevator(ordersMatrix[0][0], ordersMatrix[0][1]);

@@ -1,6 +1,6 @@
 #include "elevator.h"
-#include "orders.h"
 
+static int lastFloor = 0;
 
 int getCurrentFloor(){
     return elevio_floorSensor();
@@ -27,10 +27,10 @@ int isAtTargetFloor(int targetFloor){
 }
 
 
-void valid_floor(){
+void validFloor(){
     while(elevio_floorSensor() ==  -1){
        elevio_motorDirection(DIRN_DOWN);
-       printf("Jeg blir kjørt");
+//       printf("Jeg blir kjørt");
     }
     elevio_motorDirection(DIRN_STOP);
     lastFloor = getCurrentFloor();
@@ -39,7 +39,7 @@ void valid_floor(){
 }
 
 
-int get_lastFloor(){
+int getLastFloor(){
     int currentFloor = getCurrentFloor();
     if(currentFloor != -1){
         lastFloor  = currentFloor;
@@ -51,7 +51,7 @@ int get_lastFloor(){
 
 void elevatorLight(){
     if(getCurrentFloor() == -1 ) {
-        elevio_floorIndicator(get_lastFloor());
+        elevio_floorIndicator(getLastFloor());
     } else{
         elevio_floorIndicator(getCurrentFloor());
     }
@@ -78,21 +78,8 @@ void stopElevator(){
 }
 
 
-//Returnerer 0 for oppover, 1 for nedover (for å matche ButtonType), 2 for i ro
-int getElevDirection(){
-    int thisFloor = get_lastFloor();
-    if (ordersMatrix[0][0] > thisFloor){
-        return 0;
-    }
-    else if (ordersMatrix[0][0] < thisFloor){
-        return 1;
-    }
-    return 3;
-}
-
-
 void driveElevator(int targetFloor, ButtonType b){
-
+    printf("drive elevator");
     while(!(isAtTargetFloor(targetFloor))){
 
     // Først vil vi sjekke om vi skal opp eller ned
@@ -100,14 +87,14 @@ void driveElevator(int targetFloor, ButtonType b){
     //Floor -1 betyr at den er i en mellom stadie
         printf("Targetfloor: %d \n",targetFloor);
         printf("Floor: %d \n",getCurrentFloor());
-        printf("Last floor: %d \n",get_lastFloor());
+        printf("Last floor: %d \n",getLastFloor());
 
 
-        if (get_lastFloor() > targetFloor){
+        if (getLastFloor() > targetFloor){
             elevio_motorDirection(DIRN_DOWN);
         }
 
-        else if( get_lastFloor() < targetFloor){
+        else if( getLastFloor() < targetFloor){
             elevio_motorDirection(DIRN_UP);
         }
 
