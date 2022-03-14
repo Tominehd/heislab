@@ -80,7 +80,7 @@ void stopElevator(){
 
 void driveElevator(int targetFloor, ButtonType b){
     printf("drive elevator");
-    while(!(isAtTargetFloor(targetFloor))){
+    if(!(isAtTargetFloor(targetFloor))){
 
     // Først vil vi sjekke om vi skal opp eller ned
     
@@ -116,6 +116,8 @@ void driveElevator(int targetFloor, ButtonType b){
     
     printf("!!!!!!!!!!!!!!!!!!!!!");
     if (getCurrentFloor() == targetFloor){
+        printf("Target floor er %d\n",targetFloor);
+        printf(" vi er i etasje: %d ", getCurrentFloor());
         elevio_motorDirection(DIRN_STOP);
         printf("er her");
         checkOrdersThisFloor();

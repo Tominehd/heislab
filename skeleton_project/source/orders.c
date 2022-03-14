@@ -14,6 +14,11 @@ static int ordersMatrix[12][2] = {{9,9},
                            {9,9},
                            {9,9}};
 
+
+int getMatrixByIndex(int floor, int button){
+    return ordersMatrix[floor][button];
+}
+
 int getFloor(){
     int currentFloor = elevio_floorSensor();
     int thisFloor = 0;
@@ -32,6 +37,7 @@ int addToOrders(){
             int btnPressed = elevio_callButton(f, b);
             elevio_buttonLamp(f, b, btnPressed);
             if (btnPressed){
+                printf("Knapp er trykket på %d\n %d", f, b);
                 //printf("registert at knapp er trykket på");
                 //Sjekker før om denne ordren allerede er lagt til
                 for (int i = 0; i < 12; i++){
@@ -59,7 +65,7 @@ int addToOrders(){
 
 
 //Returnerer 0 for oppover, 1 for nedover (for å matche ButtonType), 2 for i ro
-int getElevDirection(){
+int getOrderDirection(){
     int thisFloor = getFloor();
     if (ordersMatrix[0][0] > thisFloor){
         return 0;
@@ -71,14 +77,26 @@ int getElevDirection(){
 }
 
 
+void printOrders(){
+    for (int i = 0; i < 12; i++){
+        for (int j = 0; j < 2; j++){
+            int a = ordersMatrix[i][j];
+            printf(" %d ", a);
+            //printf("%d", i);
+            //printf("%d", j);
+        }
+    printf("\n");
+    }
+}
+
 int checkOrdersThisFloor(){
     int thisFloor = getFloor();
-    int ElevDirection = getElevDirection();
+    int orderDirection = getOrderDirection();
     int anyOrders = 0; //Forblir 0 om det ikke er noen ordre i denne etasjen, blir 1 om det er det
 
     for (int i = 0; i < 12; ++i){
         //tror denne if setningen virker
-        if(ordersMatrix[i][0] == thisFloor && (ordersMatrix[i][1] == ElevDirection || ElevDirection == 3 || ordersMatrix[i][1] == 2)){
+        if(ordersMatrix[i][0] == thisFloor && (ordersMatrix[i][1] == orderDirection || orderDirection == 3 || ordersMatrix[i][1] == 2)){
             //itererer gjennom ordrene i køen herfra og ned og flytter de et steg opp for å "rydde opp"
             for (int j = (i+1); j < 12; j++){
                 ordersMatrix[j-1][0] = ordersMatrix[j][0];
@@ -90,15 +108,8 @@ int checkOrdersThisFloor(){
         }
     }
 
-    for (int i = 0; i < 12; i++){
-        for (int j = 0; j < 2; j++){
-            int a = ordersMatrix[i][j];
-            printf(" %d ", a);
-            printf("%d", i);
-            printf("%d", j);
-        }
-    printf("\n");
-    }
+    printOrders();
+
 
     return anyOrders;
 }

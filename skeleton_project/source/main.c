@@ -268,12 +268,25 @@ int main(){
             elevio_motorDirection(DIRN_STOP);
         }
 
-        printf("Før add to orders");
-        addToOrders();
-        printf("Etter add to orders");
-        if(ordersMatrix[0][0] != 9){
+        //printf("Før add to orders");
+        int pb = addToOrders();
+        printf(" Add to order retur verdi  %d\n" , pb);
+        //printf("Etter add to orders");
+
+         for (int i = 0; i < 12; i++){
+        for (int j = 0; j < 2; j++){
+            int a = ordersMatrix[i][j];
+            printf(" %d ", a);
+            //printf("%d", i);
+            //printf("%d", j);
+        }
+    printf("\n");}
+
+
+        if(getMatrixByIndex(0,0) != 9){
             closeElevatorDoor();
-            driveElevator(ordersMatrix[0][0], ordersMatrix[0][1]);
+            printf(" here ordersmatrix[3][0] %d\n", ordersMatrix[3][0]);
+            driveElevator(getMatrixByIndex(0,0), getMatrixByIndex(0,1));
         }
 
         /**
@@ -311,15 +324,7 @@ int main(){
         nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
     }
 
-    for (int i = 0; i < 12; i++){
-        for (int j = 0; j < 2; j++){
-            int a = ordersMatrix[i][j];
-            printf(" %d ", a);
-            printf("%d", i);
-            printf("%d", j);
-        }
-    printf("\n");
-    }   
+    printOrders();
 
     return 0;
 }
