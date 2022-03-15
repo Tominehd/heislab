@@ -4,16 +4,16 @@
 
 // Er bare mulig å ha 10 ordere Håper at dette kan korte ned kjøretiden litt
 static int ordersMatrix[10][2] = {{9,9},
-                           {9,9},
-                           {9,9},
-                           {9,9},
-                           {9,9},
-                           {9,9},
-                           {9,9},
-                           {9,9},
-                           {9,9},
-                           {9,9},
-                           };
+                                  {9,9},
+                                  {9,9},
+                                  {9,9},
+                                  {9,9},
+                                  {9,9},
+                                  {9,9},
+                                  {9,9},
+                                  {9,9},
+                                  {9,9},
+};
 
 
 int getMatrixByIndex(int floor, int button){
@@ -30,7 +30,7 @@ int getFloor(){
     return thisFloor;
 }
 
-int checkIfAlreadyAdded(int f, int b){
+int checkIfAdded(int f, int b){
      for (int i = 0; i < 10; i++){
             if (ordersMatrix[i][0] == f && ordersMatrix[i][1] == b){
                 return 0; //returnerer 0 om orderen er lagt til og går ut av funksjonen
@@ -41,16 +41,19 @@ int checkIfAlreadyAdded(int f, int b){
 
 
 int addToOrders(){
+    //itterer gjennom alle knappene:
     for(int f = 0; f < N_FLOORS; f++){
         for(int b = 0; b < N_BUTTONS; b++){
+            
+            //Sjekker om knappen er trykket på:
             int btnPressed = elevio_callButton(f, b);
+            //Knappen som trykkes på lyser mens den er trykket på:
+            //(Dette må vi skrive ordentlig kode for å den oppfører seg som den skal)
             elevio_buttonLamp(f, b, btnPressed);
-            if (btnPressed && checkIfAlreadyAdded(f,b)){
-                printf("Knapp er trykket på %d\n %d", f, b);
-                //printf("registert at knapp er trykket på");
-                //Sjekker før om denne ordren allerede er lagt til
-                
-                //Om orederen ikke finnes allrede legges den til den første linja i matrisa som ikke inneholder en ordre ({6,6})
+            
+            //Sjekker om ordren allerede er lagt til:
+            if (btnPressed && checkIfAdded(f,b)){
+                //Om orederen ikke finnes allrede legges den til den første linja i matrisa som ikke inneholder en ordre ({9,9})
                 for (int i = 0; i < 10; i++){
                         if (ordersMatrix[i][0] == 9 && ordersMatrix[i][1] == 9){
                             ordersMatrix[i][0] = f;
@@ -87,17 +90,17 @@ void printOrders(){
             //printf("%d", i);
             //printf("%d", j);
         }
-    printf("\n");
+        printf("\n");
     }
 }
 
 int checkOrdersThisFloor(){
-    int thisFloor = getFloor();
+    int thisFloor = getFloor(); //Lagrer etasjen heisen er i (eller var i sist om den er mellom to)
     int orderDirection = getOrderDirection();
     int anyOrders = 0; //Forblir 0 om det ikke er noen ordre i denne etasjen, blir 1 om det er det
 
     for (int i = 0; i < 10; ++i){
-        //tror denne if setningen virker
+        //Itterere gjennom ordrene og sjekker om den skal fjernes i denne etasjen
         if(ordersMatrix[i][0] == thisFloor && (ordersMatrix[i][1] == orderDirection ||  ordersMatrix[i][1] == 2)){
             //itererer gjennom ordrene i køen herfra og ned og flytter de et steg opp for å "rydde opp"
             for (int j = (i+1); j < 10; j++){
@@ -110,8 +113,5 @@ int checkOrdersThisFloor(){
         }
     }
 
-    //printOrders();
-
-
-    return anyOrders;
+    return anyOrders; //Så man kan sjekke om det var noen ordre i denne etasjen 
 }

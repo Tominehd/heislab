@@ -36,16 +36,15 @@ int isAtTargetFloor(int targetFloor){
 
 
 void validFloor(){
-    while(elevio_floorSensor() ==  -1){
-       elevio_motorDirection(DIRN_DOWN);
-       saveDirection(DIRN_DOWN);
-//       printf("Jeg blir kjørt");
+    
+    while(getCurrentFloor() ==  -1){
+        elevio_motorDirection(DIRN_DOWN);
+        saveDirection(DIRN_DOWN);
     }
     elevio_motorDirection(DIRN_STOP);
     saveDirection(DIRN_STOP);
-    lastFloor = getCurrentFloor();
-    printf("Etter valid floor %d \n", lastFloor);
 
+    lastFloor = getCurrentFloor(); //Hvorfor lagrer vi denne? -M
 }
 
 
@@ -60,26 +59,28 @@ int getLastFloor(){
 
 
 void elevatorLight(){
-    if(getCurrentFloor() == -1 ) {
+    if(getCurrentFloor() == -1){
         elevio_floorIndicator(getLastFloor());
-    } else{
+    } 
+    else{
         elevio_floorIndicator(getCurrentFloor());
     }
 }
 
 
 void hasReachedTargetFloor(){
+    
     openElevatorDoor();
     elevio_motorDirection(DIRN_STOP);
-    printf("Er her");
     elevatorLight();
+
     struct timespec remaining, request = {3, 500};
     nanosleep(&request, &remaining);
 
     closeElevatorDoor();
 }
 
-
+//Denne brukes ikke til noe enda
 void stopElevator(){
     elevio_stopLamp(1);
     if(getCurrentFloor() != -1){
@@ -90,35 +91,30 @@ void stopElevator(){
 
 void driveElevator(int targetFloor, ButtonType b){
 
+/** //Denne if setningen gjør vel ingenting?
     if(elevio_floorSensor()== -1){
-        printf("is driving \n");
     }
-   // printf("drive elevator");
+*/
+
     if(!(isAtTargetFloor(targetFloor))){
 
-    // Først vil vi sjekke om vi skal opp eller ned
-    
+    //Først vil vi sjekke om vi skal opp eller ned
     //Floor -1 betyr at den er i en mellom stadie
-        printf("Targetfloor: %d \n",targetFloor);
-        printf("Floor: %d \n",getCurrentFloor());
-        printf("Last floor: %d \n",getLastFloor());
-
 
         if (getLastFloor() > targetFloor){
             elevio_motorDirection(DIRN_DOWN);
-            saveDirection(DIRN_DOWN);
-            printf("Det er ned vi skal kjøre! \n");
+            saveDirection(DIRN_DOWN); //hehe lurer igjen på hvorfor vi lagrer denne
         }
-
         else if( getLastFloor() < targetFloor){
             elevio_motorDirection(DIRN_UP);
             saveDirection(DIRN_UP);
         }
 
-
+        //Om heisen er i en etasje ryddes køa med checkOrdersThisFloor
         if(getCurrentFloor() != -1){
-            int ordersHere = checkOrdersThisFloor();
-            checkOrdersThisFloor();
+            int ordersHere = checkOrdersThisFloor(); //1 om det er ordre som skal utføres i denne etasjen, 0 ellers
+            checkOrdersThisFloor(); //trenger denne å kjøres to ganger slik?
+            //Om det var ordre som ble ryddet her, kjøres åpne dør rutinen.
             if(ordersHere){
                 hasReachedTargetFloor();
             }
@@ -131,19 +127,12 @@ void driveElevator(int targetFloor, ButtonType b){
         addToOrders();
     }  
     
-    printf("!!!!!!!!!!!!!!!!!!!!!");
+    //Tror logikken i denne if-setningen gjør at heisen blir stuck om det går tomt for ordre
     if (getCurrentFloor() == targetFloor){
-        printf("Target floor er %d\n",targetFloor);
-        printf(" Vi er i etasje: %d ", getCurrentFloor());
         elevio_motorDirection(DIRN_STOP);
         saveDirection(DIRN_STOP);
         checkOrdersThisFloor();
         hasReachedTargetFloor();
-      
     }
 
-    
-    
-
-//}
 }
