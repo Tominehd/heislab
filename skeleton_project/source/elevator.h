@@ -11,6 +11,11 @@
 //Er denne globae variabelen nødvendig?
 static int lastFloor;
 
+MotorDirection dir;
+
+void saveDirection(MotorDirection m);
+
+MotorDirection getMotorDirection();
 
 int getCurrentFloor();
 

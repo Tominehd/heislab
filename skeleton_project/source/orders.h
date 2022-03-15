@@ -7,12 +7,14 @@
 #pragma once
 
 
-static int ordersMatrix[12][2];
+static int ordersMatrix[10][2];
 
 int getMatrixByIndex(int floor, int button);
 
 //Denne funksjonen finnes i elevator og, men lagde den her i tillegg for å unngå at filene trenger å arve fra hverandre
 int getFloor();
+
+int checkIfAlreadyAdded(int f, int b);
 
 int addToOrders();
 

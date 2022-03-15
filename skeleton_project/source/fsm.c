@@ -5,10 +5,16 @@ int returnState();
     /**
 void state_machine(){
 
-    while(1){
-        switch(INIT){
-            case INIT:
+    States currentState = INIT;
 
+    while(1){
+
+        lightUpButtons();
+
+        switch(elevatorState){
+            case INIT:
+                printf("=== VELKOMMEN TIL HEISLAB! ===\n");
+                validFloor();
 
                 
                 break;
@@ -16,10 +22,20 @@ void state_machine(){
             case WAITING:
             case IDLE:
             case STOP:
+                printf("Stoppknappen er trykket på");
+                stopElevator(); // Får også knappen til å lyse og åpner dørene
+                clearOrders();
+                clearLights()
+                
+
+
             case OBSTRUCTION:
                 
         }
+
+          nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
     }
+      
 
 }
 

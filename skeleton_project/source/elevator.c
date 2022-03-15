@@ -2,6 +2,14 @@
 
 static int lastFloor = 0;
 
+void saveDirection(MotorDirection m){
+    dir = m;
+}
+
+MotorDirection getMotorDirection(){
+    return dir;
+}
+
 int getCurrentFloor(){
     return elevio_floorSensor();
 }
@@ -30,9 +38,11 @@ int isAtTargetFloor(int targetFloor){
 void validFloor(){
     while(elevio_floorSensor() ==  -1){
        elevio_motorDirection(DIRN_DOWN);
+       saveDirection(DIRN_DOWN);
 //       printf("Jeg blir kjørt");
     }
     elevio_motorDirection(DIRN_STOP);
+    saveDirection(DIRN_STOP);
     lastFloor = getCurrentFloor();
     printf("Etter valid floor %d \n", lastFloor);
 
@@ -79,7 +89,11 @@ void stopElevator(){
 
 
 void driveElevator(int targetFloor, ButtonType b){
-    printf("drive elevator");
+
+    if(elevio_floorSensor()== -1){
+        printf("is driving \n");
+    }
+   // printf("drive elevator");
     if(!(isAtTargetFloor(targetFloor))){
 
     // Først vil vi sjekke om vi skal opp eller ned
@@ -92,10 +106,13 @@ void driveElevator(int targetFloor, ButtonType b){
 
         if (getLastFloor() > targetFloor){
             elevio_motorDirection(DIRN_DOWN);
+            saveDirection(DIRN_DOWN);
+            printf("Det er ned vi skal kjøre! \n");
         }
 
         else if( getLastFloor() < targetFloor){
             elevio_motorDirection(DIRN_UP);
+            saveDirection(DIRN_UP);
         }
 
 
@@ -117,9 +134,9 @@ void driveElevator(int targetFloor, ButtonType b){
     printf("!!!!!!!!!!!!!!!!!!!!!");
     if (getCurrentFloor() == targetFloor){
         printf("Target floor er %d\n",targetFloor);
-        printf(" vi er i etasje: %d ", getCurrentFloor());
+        printf(" Vi er i etasje: %d ", getCurrentFloor());
         elevio_motorDirection(DIRN_STOP);
-        printf("er her");
+        saveDirection(DIRN_STOP);
         checkOrdersThisFloor();
         hasReachedTargetFloor();
       
