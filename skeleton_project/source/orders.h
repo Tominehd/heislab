@@ -3,6 +3,7 @@
 #include <signal.h>
 #include <time.h>
 #include "driver/elevio.h"
+#include "elevfunk.h"
 
 #pragma once
 
@@ -27,5 +28,8 @@ void printOrders();
 
 //Denne sorterer køen, tanker er at den skal kjører hver gang heisen kommer til en ny etasje
 int checkOrdersThisFloor();//Testet -M
+
+//Fjerner alle ordre fra matrisen med å fylle den med 9 9
+void cleanOrders();
 
 

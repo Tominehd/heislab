@@ -30,6 +30,7 @@ int getFloor(){
     return thisFloor;
 }
 
+
 int checkIfAdded(int f, int b){
      for (int i = 0; i < 10; i++){
             if (ordersMatrix[i][0] == f && ordersMatrix[i][1] == b){
@@ -47,12 +48,11 @@ int addToOrders(){
             
             //Sjekker om knappen er trykket på:
             int btnPressed = elevio_callButton(f, b);
-            //Knappen som trykkes på lyser mens den er trykket på:
-            //(Dette må vi skrive ordentlig kode for å den oppfører seg som den skal)
-            elevio_buttonLamp(f, b, btnPressed);
             
             //Sjekker om ordren allerede er lagt til:
             if (btnPressed && checkIfAdded(f,b)){
+                //Skrur på lyset på knappen som ble trykket på
+                buttonLampOn(f, b);
                 //Om orederen ikke finnes allrede legges den til den første linja i matrisa som ikke inneholder en ordre ({9,9})
                 for (int i = 0; i < 10; i++){
                         if (ordersMatrix[i][0] == 9 && ordersMatrix[i][1] == 9){
@@ -82,15 +82,11 @@ int getOrderDirection(){
 }
 
 
-
-
 void printOrders(){
     for (int i = 0; i < 10; i++){
         for (int j = 0; j < 2; j++){
             int a = ordersMatrix[i][j];
             printf(" %d ", a);
-            //printf("%d", i);
-            //printf("%d", j);
         }
         printf("\n");
     }
@@ -104,6 +100,8 @@ int checkOrdersThisFloor(){
     for (int i = 0; i < 10; ++i){
         //Itterere gjennom ordrene og sjekker om den skal fjernes i denne etasjen
         if(ordersMatrix[i][0] == thisFloor && (ordersMatrix[i][1] == orderDirection ||  ordersMatrix[i][1] == 2 || orderDirection == 2)){
+            //Skrur av lyset på knapppen tilhørende ordren som ble fjernet
+            buttonLampOff(getMatrixByIndex(i,0), getMatrixByIndex(i,1));
             //itererer gjennom ordrene i køen herfra og ned og flytter de et steg opp for å "rydde opp"
             for (int j = (i+1); j < 10; j++){
                 ordersMatrix[j-1][0] = ordersMatrix[j][0];
@@ -116,4 +114,17 @@ int checkOrdersThisFloor(){
     }
 
     return anyOrders; //Så man kan sjekke om det var noen ordre i denne etasjen 
+}
+
+void cleanOrders(){
+    for (int i = 0; i < 10; i++){
+                ordersMatrix[i][0] = 9;
+                ordersMatrix[i][1] = 9;
+            }
+    for(int f = 0; f < N_FLOORS; f++){
+        for(int b = 0; b < N_BUTTONS; b++){
+            buttonLampOff(f,b); //Slår av alle lysene
+        }
+    }
+    floorLight(); //Slår på lyset i etasjen man er i
 }

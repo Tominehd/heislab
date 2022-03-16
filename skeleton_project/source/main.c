@@ -4,24 +4,25 @@
 #include <time.h>
 #include "driver/elevio.h"
 #include "fsm.h"
-#include "elevator.h"
+#include "elevdrive.h"
+#include "elevfunk.h"
 #include "orders.h"
 
 //Hva mer må gjøres?
 //Obstruksjon og stoppknapp
 //Lys på etasjeknappene -M
-//Den tar ikke i mot ordre når døra er åpen -M
 
 
 int main(){
 
     elevio_init();
     validFloor();
+    stopElevator();
+    closeElevatorDoor();
 
     printf("=== VELKOMMEN TIL HEISLAB! ===\n");
     printf("Press the stop button on the elevator panel to exit\n");  
 
-    stopElevator();
 
     while(1){
 
@@ -35,16 +36,12 @@ int main(){
         }
 
         //Dette er eneste vi har om obstruksjo og stopp, det må fikses etterhvert -M
-        if(elevio_obstruction()){
-            elevio_stopLamp(1);
-        } 
-        else {
-            elevio_stopLamp(0);
+        if(isObstructionButtonPushed()){
+            obstruction();
         }
         
-        if(elevio_stopButton()){
+        if(isStopButtonPushed()){
             stopElevator();
-            break;
         }
 
         
