@@ -102,28 +102,26 @@ void stopElevator(){
 
 void obstruction(){
     if(getDoorOpen() == 1){
-       printf("Jeg blir også kjørt");
-        elevio_motorDirection(DIRN_STOP); //Burde være av uansett da. Så vet ikke helt om det er nødvndig <3
-    
+        //printf("Jeg blir også kjørt");
+        elevio_motorDirection(DIRN_STOP); //Burde være av uansett da. Så vet ikke helt om det er nødvndig -t
         openElevatorDoor();
+
         while(isObstructionButtonPushed()){
           //  printf("Knappen er trykket på");
             addToOrders(); // Må være der så den tar imot ordre. Antar den kan ta imot ordre 
             checkOrdersThisFloor();
         }
-        if(!isObstructionButtonPushed()){
-                time_t seconds = time(NULL);
-            while((time(NULL) - seconds) < 3){
-                addToOrders(); // Må være der så den tar imot ordre. 
-                checkOrdersThisFloor();
-            }
-            closeElevatorDoor();
+
+        time_t seconds = time(NULL);
+
+        while((time(NULL) - seconds) < 3){
+            addToOrders(); // Må være der så den tar imot ordre. 
+            checkOrdersThisFloor();
         }
+        closeElevatorDoor();
+
     }
-}
-
-
-
+} 
 
 void driveElevator(int targetFloor, ButtonType b){
 

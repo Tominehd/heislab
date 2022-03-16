@@ -17,7 +17,7 @@ int main(){
 
     elevio_init();
     validFloor();
-    stopElevator();
+    elevio_motorDirection(DIRN_STOP);
     closeElevatorDoor();
 
     printf("=== VELKOMMEN TIL HEISLAB! ===\n");
@@ -28,7 +28,6 @@ int main(){
 
         addToOrders();   
 
-//Kommentert ut for å teste funksjonene
 
         if(getMatrixByIndex(0,0) != 9){
             closeElevatorDoor(); //Trenger denne å kjøres her? -M
@@ -44,7 +43,7 @@ int main(){
             stopElevator();
         }
 
-        
+        printOrders();
     
         //Hva gjør denne? Skal den være her? -M
         nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);

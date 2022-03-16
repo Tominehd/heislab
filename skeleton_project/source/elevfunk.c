@@ -6,7 +6,6 @@ int getDoorOpen(){
 
 void closeElevatorDoor(){
     isDoorOpen = 0;
-    printf("test");
     elevio_doorOpenLamp(0);
 };
 

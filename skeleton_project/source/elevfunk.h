@@ -24,6 +24,8 @@ void openElevatorDoor();
 //Skrur etasjelyset i etasjen heisen er i/var i sist, virker (er muligens litt treg)
 void floorLight();
 
+//Skrur på lyset
 void buttonLampOn(int floor, int button);
 
+//Skrur av lyset
 void buttonLampOff(int floor, int button);
