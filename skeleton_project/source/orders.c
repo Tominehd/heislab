@@ -82,6 +82,8 @@ int getOrderDirection(){
 }
 
 
+
+
 void printOrders(){
     for (int i = 0; i < 10; i++){
         for (int j = 0; j < 2; j++){
@@ -101,7 +103,7 @@ int checkOrdersThisFloor(){
 
     for (int i = 0; i < 10; ++i){
         //Itterere gjennom ordrene og sjekker om den skal fjernes i denne etasjen
-        if(ordersMatrix[i][0] == thisFloor && (ordersMatrix[i][1] == orderDirection ||  ordersMatrix[i][1] == 2)){
+        if(ordersMatrix[i][0] == thisFloor && (ordersMatrix[i][1] == orderDirection ||  ordersMatrix[i][1] == 2 || orderDirection == 2)){
             //itererer gjennom ordrene i køen herfra og ned og flytter de et steg opp for å "rydde opp"
             for (int j = (i+1); j < 10; j++){
                 ordersMatrix[j-1][0] = ordersMatrix[j][0];

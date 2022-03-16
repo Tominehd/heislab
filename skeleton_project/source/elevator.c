@@ -73,9 +73,18 @@ void hasReachedTargetFloor(){
     openElevatorDoor();
     elevio_motorDirection(DIRN_STOP);
     elevatorLight();
+    
+    time_t seconds = time(NULL);
 
-    struct timespec remaining, request = {3, 500};
-    nanosleep(&request, &remaining);
+    while((time(NULL) - seconds) < 3){
+        addToOrders();
+        //stop
+        //obstruct
+        //keepsLights
+    }
+
+    //struct timespec remaining, request = {3, 500};
+    //nanosleep(&request, &remaining);
 
     closeElevatorDoor();
 }
@@ -100,6 +109,11 @@ void driveElevator(int targetFloor, ButtonType b){
 
     //Først vil vi sjekke om vi skal opp eller ned
     //Floor -1 betyr at den er i en mellom stadie
+        
+        printf("Targetfloor %d", targetFloor);
+        printf("Lastfloor %d", getLastFloor());
+        printf("Floor %d", getFloor());
+        printf("Current floor %d", getCurrentFloor());
 
         if (getLastFloor() > targetFloor){
             elevio_motorDirection(DIRN_DOWN);
@@ -128,10 +142,10 @@ void driveElevator(int targetFloor, ButtonType b){
     }  
     
     //Tror logikken i denne if-setningen gjør at heisen blir stuck om det går tomt for ordre
+    printOrders();
     if (getCurrentFloor() == targetFloor){
-        elevio_motorDirection(DIRN_STOP);
-        saveDirection(DIRN_STOP);
         checkOrdersThisFloor();
+        saveDirection(DIRN_STOP);
         hasReachedTargetFloor();
     }
 
