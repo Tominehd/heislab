@@ -12,11 +12,3 @@
 #include <pthread.h>
 
 
-struct Order {
-    int floor;
-    ButtonType upOrDown;
-    struct Order* next;
-};
- 
-
-void printOrders(struct Order* o);

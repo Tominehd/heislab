@@ -39,6 +39,7 @@ void elevio_init(void);
  * @param[in] dirn An Enum where -1 means down, 0 stop and 1 up
  */
 void elevio_motorDirection(MotorDirection dirn);
+
 /**
  * @brief makes the button light up when pressed
  * 
@@ -47,18 +48,21 @@ void elevio_motorDirection(MotorDirection dirn);
  * @param[in] value 
  */
 void elevio_buttonLamp(int floor, ButtonType button, int value);
+
 /**
  * @brief indicates which floor the elevator is on
  * 
  * @param[in] floor 
  */
 void elevio_floorIndicator(int floor);
+
 /**
  * @brief makes the door lamp light up when the door is open
  * 
  * @param[in] value 
  */
 void elevio_doorOpenLamp(int value);
+
 /**
  * @brief Turn on the stop lamp
  * 
@@ -74,12 +78,14 @@ void elevio_stopLamp(int value);
  * @return int, 0 if false and 1 if true
  */
 int elevio_callButton(int floor, ButtonType button);
+
 /**
  * @brief Holds track of which floor the elevtor is on
  * 
  * @return an int that indicates the floor
  */
 int elevio_floorSensor(void);
+
 /**
  * @brief checks if the stop button is being pressed
  * 
