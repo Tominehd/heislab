@@ -10,7 +10,7 @@
 #include "driver/elevio.h"
 #include "orders.h"
 #include "elevfunk.h"
-#include "globalvar.h"
+
 
 #pragma once
 
