@@ -27,7 +27,7 @@ int main(){
 
         addToOrders();   
 
-        if(getMatrixByIndex(0,0) != 9){
+        if(elevHasAnyOrders()){
             driveElevator(getMatrixByIndex(0,0));
         }
 

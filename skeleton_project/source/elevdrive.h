@@ -68,6 +68,18 @@ void stopElevator();
 void obstruction();
 
 /**
+ * @brief 
+ * 
+ */
+void isAtFloor();
+
+/**
+ * @brief Returns true if the first element of the matrix is not 9
+ * 
+ */
+elevHasAnyOrders();
+
+/**
  * @brief calls the other functons together to make the elevator drive as it should
  * 
  * @param targetFloor the floor the elevator is going to (the top order in orderMatix)

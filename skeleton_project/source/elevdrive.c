@@ -105,6 +105,23 @@ void obstruction(){
     }
 } 
 
+
+void isAtFloor(){
+    if(getCurrentFloor() != -1){
+        int ordersHere = checkOrdersThisFloor(); //1 om det er ordre som skal utføres i denne etasjen, 0 ellers
+        checkOrdersThisFloor(); //trenger denne å kjøres to ganger slik?
+        //Om det var ordre som ble ryddet her, kjøres åpne dør rutinen.
+        if(ordersHere){
+            hasReachedTargetFloor();
+        }
+    }
+}
+
+void elevHasAnyOrders(){
+    return getMatrixByIndex(0,0) != 9; 
+}
+
+
 void driveElevator(int targetFloor){
 
     if(!(isAtTargetFloor(targetFloor))){
@@ -120,15 +137,7 @@ void driveElevator(int targetFloor){
         }
 
         //Om heisen er i en etasje ryddes køa med checkOrdersThisFloor
-        if(getCurrentFloor() != -1){
-            int ordersHere = checkOrdersThisFloor(); //1 om det er ordre som skal utføres i denne etasjen, 0 ellers
-            checkOrdersThisFloor(); //trenger denne å kjøres to ganger slik?
-            //Om det var ordre som ble ryddet her, kjøres åpne dør rutinen.
-            if(ordersHere){
-                hasReachedTargetFloor();
-            }
-
-        }
+        isAtFloor();
 
         floorLight();
 
