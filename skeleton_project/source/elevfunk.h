@@ -31,14 +31,14 @@ int getIsDoorOpen();
 void closeElevatorDoor();
 
 /**
- * @brief turns on the dorlight
+ * @brief turns on the doorlight
  * sets isDoorOpen = 1
  */
 //Tenner dørlyset
 void openElevatorDoor();
 
 /**
- * @brief turns on the floorpanel light in the floor the elevator is in or was in last
+ * @brief turns on the floorpanel lights in the floor the elevator is in or was in last
  */
 //Skrur på etasjelyset i etasjen heisen er i/ var i sist
 void floorLight();

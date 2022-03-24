@@ -70,24 +70,30 @@ void stopElevator(){
         openElevatorDoor();
     }
     cleanOrders();
+
     while(isStopButtonPushed()){
         elevio_stopLamp(1);
+        obstruction();
     }
 
     elevio_stopLamp(0);
 
+    printf("lyset er slått av");
     time_t seconds = time(NULL);
 
-        while((time(NULL) - seconds) < 3){
+    while((time(NULL) - seconds) < 3){
         addToOrders(); // Må være der så den tar imot ordre. 
         checkOrdersThisFloor();
+        if(isObstructionButtonPushed()){
+            obstruction();
+        }
 
     }
     closeElevatorDoor();
 }
 
 void obstruction(){
-    if(getIsDoorOpen() == 1){
+    if(getIsDoorOpen()){
 
         while(isObstructionButtonPushed()){
             addToOrders(); // Må være der så den tar imot ordre. Antar den kan ta imot ordre 
@@ -117,9 +123,6 @@ void isAtFloor(){
     }
 }
 
-void elevHasAnyOrders(){
-    return getMatrixByIndex(0,0) != 9; 
-}
 
 
 void driveElevator(int targetFloor){

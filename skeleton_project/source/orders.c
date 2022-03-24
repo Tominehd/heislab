@@ -6,6 +6,11 @@ int getMatrixByIndex(int col, int row){
     return ordersMatrix[col][row];
 }
 
+// Endre navn til getAnyOrders();
+int anyOrders(){
+    return getMatrixByIndex(0,0) != 9; 
+}
+
 int getFloor(){
     int currentFloor = elevio_floorSensor();
     if(currentFloor != -1){

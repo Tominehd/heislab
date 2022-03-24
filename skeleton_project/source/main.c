@@ -27,14 +27,10 @@ int main(){
 
         addToOrders();   
 
-        if(elevHasAnyOrders()){
+        if(anyOrders()){
             driveElevator(getMatrixByIndex(0,0));
         }
-
-        if(isObstructionButtonPushed()){
-            obstruction();
-        }
-        
+     
         if(isStopButtonPushed()){
             stopElevator();
         }

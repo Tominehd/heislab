@@ -25,7 +25,14 @@
 int getMatrixByIndex(int col, int row);
 
 /**
- * @brief Get the value of the floor the elevator is on
+ * @brief Returns true if the first element of the matrix is an order
+ * returns false if not
+ */
+
+int anyOrders();
+
+/**
+ * @brief Get the value of the floor where the elevator is
  * 
  * @return int, the floor the elevator is on or the last it was on
  */
@@ -33,37 +40,38 @@ int getMatrixByIndex(int col, int row);
 int getFloor();
 
 /**
- * @brief Checks if a order is alredy exists in orderMatrix
+ * @brief Checks if an order is alredy exists in ordersMatrix
  * 
- * @param f floor the order goes to
- * @param b button pressed
- * @return int, 0 if the order alredy exist, 1 if it should be added
+ * @param f the floor the order goes to
+ * @param b the button pressed
+ * @return int, 0 if the order already exists, 1 if it doesnt exist and should be added
  */
 int checkIfToBeAdded(int f, int b);
 
 /**
- * @brief Adds an order to orderMatrix if checkIfToBeAdded returns 1
+ * @brief Adds an order to ordersMatrix if checkIfToBeAdded returns 1
  * 
- * @return int, 1 if an order was added to orderMatrix, 0 if not 
+ * @return int, 1 if an order was added to ordersMatrix, 0 if not 
  */
 int addToOrders();
 
 /**
  * @brief Finds the direction the elevator is driving
- * based on the top order in orderMatrix
- * @return int, 0 if the elevator is abow the top order, 1 if the elevator is below it and 2 if the elevator is in the same floor
+ * based on the top order in ordersMatrix
+ * @return int, 0 if the elevator is above the top order, 1 if the elevator is below it and 2 if the elevator is in the same floor
  */
 //Returnerer 0 for oppover, 1 for nedover (for å matche ButtonType), 2 for i ro
 int getOrderDirection();//Testet -M
 
+
 /**
- * @brief prints orderMatrix
+ * @brief prints orders in ordersMatrix
  */
 //Bare en testfunksjon, virker som den skal
 void printOrders();
 
 /**
- * @brief checks if there is any orders in orderMatrix for the floor the elevator is on.
+ * @brief checks if there is any orders in ordersMatrix for the floor the elevator is on.
  * Deletes the orders for this floor.
  * 
  * @return int, 0 if no orders was deleted, 1 if any was
@@ -72,9 +80,9 @@ void printOrders();
 int checkOrdersThisFloor();//Testet -M
 
 /**
- * @brief delets all orders in oderMatrix, and fils if with 9 on all index
+ * @brief deletes all orders in ordersMatrix, and fills if with 9 on all indexes
  */
-//Fjerner alle ordre fra matrisen med å fylle den med 9 9
 void cleanOrders();
+
 
 
