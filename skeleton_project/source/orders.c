@@ -6,12 +6,12 @@ int getMatrixByIndex(int col, int row){
     return ordersMatrix[col][row];
 }
 
-// Endre navn til getAnyOrders();
-int anyOrders(){
+
+int getAnyOrders(){
     return getMatrixByIndex(0,0) != 9; 
 }
 
-int getFloor(){
+int ordersGetFloor(){
     int currentFloor = elevio_floorSensor();
     if(currentFloor != -1){
         lastFloor  = currentFloor;
@@ -22,11 +22,11 @@ int getFloor(){
 
 
 int checkIfToBeAdded(int f, int b){
-     for (int i = 0; i < 10; i++){
-            if (ordersMatrix[i][0] == f && ordersMatrix[i][1] == b){
-                return 0; //returnerer 0 om orderen er lagt til og går ut av funksjonen
-            }
+    for (int i = 0; i < 10; i++){
+        if (ordersMatrix[i][0] == f && ordersMatrix[i][1] == b){
+            return 0; //returnerer 0 om orderen er lagt til og går ut av funksjonen
         }
+    }
     return 1;
 }
 
@@ -41,27 +41,26 @@ int addToOrders(){
             
             //Sjekker om ordren allerede er lagt til:
             if (btnPressed && checkIfToBeAdded(f,b)){
-                //Skrur på lyset på knappen som ble trykket på
                 buttonLampOn(f, b);
                 //Om orederen ikke finnes allrede legges den til den første linja i matrisa som ikke inneholder en ordre ({9,9})
                 for (int i = 0; i < 10; i++){
-                        if (ordersMatrix[i][0] == 9 && ordersMatrix[i][1] == 9){
-                            ordersMatrix[i][0] = f;
-                            ordersMatrix[i][1] = b;
-                            return 1;
-                        }
+                    if (ordersMatrix[i][0] == 9 && ordersMatrix[i][1] == 9){
+                        ordersMatrix[i][0] = f;
+                        ordersMatrix[i][1] = b;
+                        return 1;
+                    }
                     
                 }
             }
         }
     }
-    return 0; //Bare for at noe skal returneres uansett
+    return 0;
 }
 
 
-//Returnerer 0 for oppover, 1 for nedover (for å matche ButtonType), 2 for i ro
+//Returnerer 0, 1 og 2 for å matche ButtonType
 int getOrderDirection(){
-    int thisFloor = getFloor();
+    int thisFloor = ordersGetFloor();
     if (ordersMatrix[0][0] > thisFloor){
         return 0;
     }
@@ -83,14 +82,13 @@ void printOrders(){
 }
 
 int checkOrdersThisFloor(){
-    int thisFloor = getFloor(); //Lagrer etasjen heisen er i (eller var i sist om den er mellom to)
+    int thisFloor = ordersGetFloor();
     int orderDirection = getOrderDirection();
-    int anyOrders = 0; //Forblir 0 om det ikke er noen ordre i denne etasjen, blir 1 om det er det
+    int anyOrders = 0;
 
     for (int i = 0; i < 10; ++i){
         //Itterere gjennom ordrene og sjekker om den skal fjernes i denne etasjen
         if(ordersMatrix[i][0] == thisFloor && (ordersMatrix[i][1] == orderDirection ||  ordersMatrix[i][1] == 2 || orderDirection == 2)){
-            //Skrur av lyset på knapppen tilhørende ordren som ble fjernet
             buttonLampOff(getMatrixByIndex(i,0), getMatrixByIndex(i,1));
             //itererer gjennom ordrene i køen herfra og ned og flytter de et steg opp for å "rydde opp"
             for (int j = (i+1); j < 10; j++){
@@ -103,7 +101,7 @@ int checkOrdersThisFloor(){
         }
     }
 
-    return anyOrders; //Så man kan sjekke om det var noen ordre i denne etasjen 
+    return anyOrders;
 }
 
 void cleanOrders(){

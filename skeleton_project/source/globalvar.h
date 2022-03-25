@@ -1,7 +1,6 @@
 /**
  * @file globalvar.h
  * @brief this file contains our global variables
- * 
  */
 
 #include <stdio.h>
@@ -13,14 +12,13 @@
 
 /**
  * @brief a matrix to keep track of the orders
- * 
  */
 static int ordersMatrix[10][2];
 
 
 /**
  * @brief keeps track of where the elevator is
- * if the elevator is inbetween floors, is lastFloor the last floor the elevator was in
+ * if the elevator is inbetween floors, is lastFloors value the last floor the elevator was on
  */
 static int lastFloor;
 

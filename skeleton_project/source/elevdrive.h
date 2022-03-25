@@ -19,8 +19,13 @@
  * 
  * @return -1 inbetween floors, 0 in first floor, 1 in second floor, and so on...
  */
-//Returnerer etasjen heisen er i eller -1 om den er i mellom etasjer
 int getCurrentFloor();
+
+/**
+ * @brief makes sure the elevator does not start in between floors when initalized
+ * The elevator will drive down to the nearest valid floor and stop
+ */
+void validFloor(); 
 
 /**
  * @brief Checks if the elevator is at targetFloor
@@ -28,19 +33,12 @@ int getCurrentFloor();
  * @param[in] targetFloor the floor the elevator is going to
  * @return int, 1 if the elevator is at the same floor as @p targetFloor retruns 0 if not
  */
-//Returnerer 1 om heisen er i targetFloor, returnerer 0 ellers
 int isAtTargetFloor(int targetFloor);
-
-/**
- * @brief makes sure the elevator doesnt start in between floors when initalized
- * The elevator will drive downwars to the nearest valid floor and stop
- */
-void validFloor(); 
 
 /**
  * @brief Get the value of the floor the elevator is on
  * 
- * @return int, if the elevator is inbetween floors the elevator return the last floor
+ * @return int, if the elevator is inbetween floors the last floor the elevator was on is returned
  * if the elevators is on a floor, that floor is returned
  */
 int getLastFloor();
@@ -49,7 +47,6 @@ int getLastFloor();
  * @brief Get the elevator to do everything it should do when it stops on a floor
  * turns on the door light, stops the elevator, wait 3 sec, turns of the door light
  */
-//Skrur på dørlyset, holder døren åpen i 3 sekunder, skrur av dørlyset
 void hasReachedTargetFloor();
 
 /**
@@ -67,7 +64,7 @@ void obstruction();
 
 /**
  * @brief calls checkOrdersThisFloor
- * if 
+ * if it returns 1 (there are orders to this floor), it calls hasReachedTargetFloor
  */
 void isAtFloor();
 
@@ -75,6 +72,6 @@ void isAtFloor();
 /**
  * @brief calls the other functions together to make the elevator drive as it should
  * 
- * @param targetFloor the floor the elevator is going to (the top order in ordersMatix)
+ * @param[in] targetFloor the floor the elevator is going to (the top order in ordersMatix)
  */
 void driveElevator(int targetFloor);

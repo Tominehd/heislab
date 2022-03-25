@@ -1,7 +1,6 @@
 /**
  * @file orders.h
  * @brief this file handles the order system of the elevator
- * 
  */
 
 #include <stdio.h>
@@ -17,33 +16,32 @@
 /**
  * @brief Get the Matrix By Index object
  * 
- * @param col[in] col index
- * @param row[in] row index
- * @return int the stored order value on that index
+ * @param[in] col col-index
+ * @param[in] row row-index
+ * 
+ * @return int, the stored order value on that index
  */
-//Denne gjør at vi kan hente ut elementene i den globale matrisen i main.
 int getMatrixByIndex(int col, int row);
 
 /**
  * @brief Returns true if the first element of the matrix is an order
  * returns false if not
  */
-
-int anyOrders();
+int getAnyOrders();
 
 /**
- * @brief Get the value of the floor where the elevator is
- * 
- * @return int, the floor the elevator is on or the last it was on
+ * @brief Get the value of the floor where the elevator is and updates the global variable lastFloor
+ *  
+ * @return int, the global variable lastFloor with the value of the floor the elevator is on or the last it was on
  */
-//Denne funksjonen finnes i elevator og, men lagde den her i tillegg for å unngå at filene trenger å arve fra hverandre
-int getFloor();
+int ordersGetFloor();
 
 /**
- * @brief Checks if an order is alredy exists in ordersMatrix
+ * @brief Checks if an order alredy exists in ordersMatrix
  * 
- * @param f the floor the order goes to
- * @param b the button pressed
+ * @param[in] f the floor the order goes to
+ * @param[in] b the button pressed
+ * 
  * @return int, 0 if the order already exists, 1 if it doesnt exist and should be added
  */
 int checkIfToBeAdded(int f, int b);
@@ -58,26 +56,23 @@ int addToOrders();
 /**
  * @brief Finds the direction the elevator is driving
  * based on the top order in ordersMatrix
- * @return int, 0 if the elevator is above the top order, 1 if the elevator is below it and 2 if the elevator is in the same floor
+ * @return int, 0 if the elevator is above the top order, 1 if the elevator is below it and 2 if the elevator is on the same floor
  */
-//Returnerer 0 for oppover, 1 for nedover (for å matche ButtonType), 2 for i ro
-int getOrderDirection();//Testet -M
+int getOrderDirection();
 
 
 /**
  * @brief prints orders in ordersMatrix
  */
-//Bare en testfunksjon, virker som den skal
 void printOrders();
 
 /**
- * @brief checks if there is any orders in ordersMatrix for the floor the elevator is on.
+ * @brief checks if there are any orders in ordersMatrix for the floor the elevator is on.
  * Deletes the orders for this floor.
  * 
  * @return int, 0 if no orders was deleted, 1 if any was
  */
-//Denne sorterer køen, tanker er at den skal kjører hver gang heisen kommer til en ny etasje
-int checkOrdersThisFloor();//Testet -M
+int checkOrdersThisFloor();
 
 /**
  * @brief deletes all orders in ordersMatrix, and fills if with 9 on all indexes

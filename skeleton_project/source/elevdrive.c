@@ -5,16 +5,6 @@ int getCurrentFloor(){
     return elevio_floorSensor();
 }
 
-int isAtTargetFloor(int targetFloor){
-    if((getCurrentFloor() == targetFloor) ){
-        return 1;
-    }
-    else{
-        return 0;
-    }
-}
-
-
 void validFloor(){
     
     while(getCurrentFloor() ==  -1){
@@ -24,6 +14,15 @@ void validFloor(){
 
     lastFloor = getCurrentFloor();
 } 
+
+int isAtTargetFloor(int targetFloor){
+    if((getCurrentFloor() == targetFloor) ){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
 
 
 int getLastFloor(){
@@ -82,7 +81,7 @@ void stopElevator(){
     time_t seconds = time(NULL);
 
     while((time(NULL) - seconds) < 3){
-        addToOrders(); // Må være der så den tar imot ordre. 
+        addToOrders();
         checkOrdersThisFloor();
         if(isObstructionButtonPushed()){
             obstruction();
@@ -96,14 +95,14 @@ void obstruction(){
     if(getIsDoorOpen()){
 
         while(isObstructionButtonPushed()){
-            addToOrders(); // Må være der så den tar imot ordre. Antar den kan ta imot ordre 
+            addToOrders();
             checkOrdersThisFloor();
         }
 
         time_t seconds = time(NULL);
 
         while((time(NULL) - seconds) < 3){
-            addToOrders(); // Må være der så den tar imot ordre. 
+            addToOrders();
             checkOrdersThisFloor();
         }
         closeElevatorDoor();
@@ -114,9 +113,9 @@ void obstruction(){
 
 void isAtFloor(){
     if(getCurrentFloor() != -1){
+        
         int ordersHere = checkOrdersThisFloor(); //1 om det er ordre som skal utføres i denne etasjen, 0 ellers
-        checkOrdersThisFloor(); //trenger denne å kjøres to ganger slik?
-        //Om det var ordre som ble ryddet her, kjøres åpne dør rutinen.
+
         if(ordersHere){
             hasReachedTargetFloor();
         }
@@ -135,7 +134,7 @@ void driveElevator(int targetFloor){
         if (getLastFloor() > targetFloor){
             elevio_motorDirection(DIRN_DOWN);
         }
-        else if( getLastFloor() < targetFloor){
+        else if(getLastFloor() < targetFloor){
             elevio_motorDirection(DIRN_UP);
         }
 
@@ -147,7 +146,6 @@ void driveElevator(int targetFloor){
         addToOrders();
     }  
     
-    //Tror logikken i denne if-setningen gjør at heisen blir stuck om det går tomt for ordre
     if (getCurrentFloor() == targetFloor){
         elevio_motorDirection(DIRN_STOP);
         checkOrdersThisFloor();
