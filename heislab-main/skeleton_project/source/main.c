@@ -19,7 +19,7 @@ int main(){
 
         addToOrders();   
 
-        if(anyOrders()){
+        if(getAnyOrders()){
             driveElevator(getMatrixByIndex(0,0));
         }
      

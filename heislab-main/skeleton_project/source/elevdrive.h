@@ -22,18 +22,18 @@
 int getCurrentFloor();
 
 /**
+ * @brief makes sure the elevator does not start in between floors when initalized
+ * The elevator will drive down to the nearest valid floor and stop
+ */
+void validFloor(); 
+
+/**
  * @brief Checks if the elevator is at targetFloor
  * 
  * @param[in] targetFloor the floor the elevator is going to
  * @return int, 1 if the elevator is at the same floor as @p targetFloor retruns 0 if not
  */
 int isAtTargetFloor(int targetFloor);
-
-/**
- * @brief makes sure the elevator does not start in between floors when initalized
- * The elevator will drive down to the nearest valid floor and stop
- */
-void validFloor(); 
 
 /**
  * @brief Get the value of the floor the elevator is on

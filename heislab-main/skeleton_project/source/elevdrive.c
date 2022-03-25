@@ -5,16 +5,6 @@ int getCurrentFloor(){
     return elevio_floorSensor();
 }
 
-int isAtTargetFloor(int targetFloor){
-    if((getCurrentFloor() == targetFloor) ){
-        return 1;
-    }
-    else{
-        return 0;
-    }
-}
-
-
 void validFloor(){
     
     while(getCurrentFloor() ==  -1){
@@ -24,6 +14,15 @@ void validFloor(){
 
     lastFloor = getCurrentFloor();
 } 
+
+int isAtTargetFloor(int targetFloor){
+    if((getCurrentFloor() == targetFloor) ){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
 
 
 int getLastFloor(){
